@@ -1,0 +1,46 @@
+services:
+  openclaw-gateway:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-gateway
+    restart: unless-stopped
+    networks:
+      - internal
+    volumes:
+      - ./data/.openclaw:/home/node/.openclaw
+      - ./data/workspace:/home/node/.openclaw/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - BROWSER_WS_ENDPOINT=ws://openclaw-browser:3000?token=${BROWSER_TOKEN}
+      - NODE_ENV=production
+    depends_on:
+      - openclaw-browser
+
+  openclaw-browser:
+    image: browserless/chrome:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-browser
+    restart: unless-stopped
+    networks:
+      - internal
+    environment:
+      - MAX_CONCURRENT_SESSIONS=3
+      - CONNECTION_TIMEOUT=300000
+      - TOKEN=${BROWSER_TOKEN}
+
+  openclaw-cli:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-cli
+    networks:
+      - internal
+    volumes:
+      - ./data/.openclaw:/home/node/.openclaw
+    entrypoint: ["node", "dist/index.js"]
+    profiles: ["tools"]
+
+networks:
+  internal:
+    driver: bridge

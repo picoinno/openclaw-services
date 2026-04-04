@@ -1,0 +1,12 @@
+# Client stacks — never commit client data
+clients/*/data/
+clients/*/.env
+clients/*/tailscale/
+
+# Provisioned client dirs at root level
+*/data/
+*/.env
+*/tailscale/
+
+# OS
+.DS_Store
