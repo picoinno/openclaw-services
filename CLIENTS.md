@@ -9,15 +9,16 @@
 
 ```yaml
 clients:
-  - slug: shanu-poudel
-    name: Shanu Poudel
-    tier: pro
-    server: homeserver
-    tailscale_host: openclaw-shanu-poudel
-    telegram_bot: ~        # fill in bot username after creation
-    status: pending        # pending | active | suspended | offboarded
-    provisioned: 2026-04-04
-    notes: ~
+  # Example entry — replace with real client after provisioning
+  # - slug: example-client
+  #   name: Example Client
+  #   tier: pro
+  #   server: homeserver
+  #   tailscale_host: openclaw-example-client
+  #   telegram_bot: ~
+  #   status: pending
+  #   provisioned: 2026-01-01
+  #   notes: ~
 ```
 
 ---

@@ -3,7 +3,8 @@ clients/*/data/
 clients/*/.env
 clients/*/tailscale/
 
-# Provisioned client dirs at root level
+# Provisioned client dirs at root level (exclude entire client dirs)
+shanu-poudel/
 */data/
 */.env
 */tailscale/
